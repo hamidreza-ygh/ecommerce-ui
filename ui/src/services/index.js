@@ -52,6 +52,22 @@ export default {
       return error.response;
     }
   },
+  async getAllProducts(header) {
+    try {
+      const response = await instance({
+        method: "GET",
+        url: header.url + "/products",
+        headers: {
+          authorization: header.authorization,
+          "Content-Type": "application/json",
+        },
+      });
+
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  },
   async tenantProvision(header, body) {
     try {
       const response = await instance({

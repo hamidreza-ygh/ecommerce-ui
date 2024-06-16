@@ -111,6 +111,7 @@ export default {
     service
       .getAllProducts({
         authorization: this.token,
+        url: this.$envVariables.VUE_APP_PRODUCT_API_URL,
       })
       .then((response) => {
         console.log(response.data);
