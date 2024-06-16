@@ -1,1 +1,1 @@
-# ecommerce-ui
+# tenant-ui
