@@ -66,11 +66,11 @@
         </div>
       </div>
       <div
-            v-if="error"
-            class="text-md text-center text-white uppercase bg-red-500 mt-4 p-2 rounded-md"
-          >
-            {{ error }}
-          </div>
+        v-if="error"
+        class="text-md text-center text-white uppercase bg-red-500 mt-4 p-2 rounded-md"
+      >
+        {{ error }}
+      </div>
     </div>
   </div>
 </template>
@@ -155,16 +155,15 @@ export default {
     },
     removeAllTodos() {
       this.todos.forEach((todo) => {
-        service
-          .removeTodo(
-            {
-              url: "http://tenant-" + this.userId + ".tenantodo.life",
-              authorization: this.token,
-            },
-            {
-              id: todo.id,
-            }
-          )
+        service.removeTodo(
+          {
+            url: "http://tenant-" + this.userId + ".tenantodo.life",
+            authorization: this.token,
+          },
+          {
+            id: todo.id,
+          }
+        );
       });
       this.todos = [];
     },

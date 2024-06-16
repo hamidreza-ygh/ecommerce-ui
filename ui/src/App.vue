@@ -3,16 +3,16 @@
     <div v-if="isAuthenticated" class="flex justify-between gap-2">
       <div class="basis-2/3 flex justify-start gap-4">
         <router-link to="/">Home</router-link>
-        <!-- <router-link :to="{ name: 'shop' }">Shop</router-link> -->
+        <router-link :to="{ name: 'shop' }">Shop</router-link>
       </div>
       <div class="basis-1/3 flex flex-row justify-end items-center gap-6">
-        <!-- <button
+        <button
           class="flex font-semibold items-center gap-2"
           @click="isOpenCart = !isOpenCart"
         >
           <span></span>
           <img :src="shoppingCartIcon" />
-        </button> -->
+        </button>
         <a href="" @click="logOut">Logout</a>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <router-link to="/login">Log-in</router-link>
     </span>
   </nav>
-  <!-- <shoppingCart
+  <shoppingCart
     :is-open="isOpenCart"
     :products="bagProducts"
     @place-order="
@@ -45,7 +45,7 @@
       }
     "
   >
-  </modal> -->
+  </modal>
   <router-view
     class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
   />
@@ -53,18 +53,18 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-// import shoppingCart from "@/components/ShoppingCart.vue";
-// import shoppingCartIcon from "@/assets/icons/cart-shopping-solid.svg";
-// import modal from "@/components/ModalComponent.vue";
+import shoppingCart from "@/components/ShoppingCart.vue";
+import shoppingCartIcon from "@/assets/icons/cart-shopping-solid.svg";
+import modal from "@/components/ModalComponent.vue";
 
 export default {
   name: "App",
   data() {
     return {
-      // shoppingCartIcon: shoppingCartIcon,
-      // isOpenCart: false,
-      // isOpenModal: false,
-      // modalMessage: {},
+      shoppingCartIcon: shoppingCartIcon,
+      isOpenCart: false,
+      isOpenModal: false,
+      modalMessage: {},
     };
   },
   methods: {
@@ -77,7 +77,7 @@ export default {
   computed: {
     ...mapGetters(["isAuthenticated", "bagProducts"]),
   },
-  // components: { shoppingCart, modal },
+  components: { shoppingCart, modal },
 };
 </script>
 
