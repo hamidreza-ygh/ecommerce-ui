@@ -83,16 +83,16 @@ spec:
                 name: ecommerce-ui
                 port:
                   number: 80
-    - host: api.tenantodo.life
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: user-manager
-                port:
-                  number: 3000
+    # - host: api.tenantodo.life
+    #   http:
+    #     paths:
+    #       - path: /
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: user-manager
+    #             port:
+    #               number: 3000
 
 # With TLS CONFIGURATION
 # apiVersion: networking.k8s.io/v1
