@@ -1,0 +1,123 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-ui
+spec:
+  selector:
+    matchLabels:
+      app: ecommerce-ui
+  template:
+    metadata:
+      labels:
+        app: ecommerce-ui
+        role: user-interface
+    spec:
+      containers:
+        - name: ecommerce-ui
+          image: ghcr.io/hamidreza-ygh/ecommerce-ui:latest
+          env:
+            - name: VUE_APP_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ui-secrets
+                  key: VUE_APP_BASE_URL
+            - name: VUE_APP_USER_API_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ui-secrets
+                  key: VUE_APP_USER_API_URL
+            - name: VUE_APP_ECOMMERCE_PROVISION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ui-secrets
+                  key: VUE_APP_ECOMMERCE_PROVISION_URL
+            - name: VUE_APP_GH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: ui-secrets
+                  key: VUE_APP_GH_TOKEN
+            - name: VUE_APP_CLUSTER_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: ui-secrets
+                  key: VUE_APP_CLUSTER_ENDPOINT
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce-ui
+spec:
+  selector:
+    app: ecommerce-ui
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ecommerce-ui
+spec:
+  rules:
+    - host: tenantodo.life
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ecommerce-ui
+                port:
+                  number: 80
+    - host: api.tenantodo.life
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: user-manager
+                port:
+                  number: 3000
+
+# With TLS CONFIGURATION
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: tenant-ui
+# spec:
+#   tls:
+#   - hosts:
+#       - tenantodo.life
+#       - api.tenantodo.life
+#     secretName: tenant-ui-cert
+#   rules:
+#     - host: tenantodo.life
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: tenant-ui
+#                 port:
+#                   number: 80
+#     - host: api.tenantodo.life
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: tenant-manager
+#                 port:
+#                   number: 3000
