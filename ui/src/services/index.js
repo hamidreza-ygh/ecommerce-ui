@@ -18,7 +18,7 @@ export default {
     try {
       const response = await instance({
         method: "POST",
-        url: header.url + "/login",
+        url: header.url + "/authentication/login",
         headers: {
           "Content-Type": "application/json",
         },
@@ -37,7 +37,7 @@ export default {
     try {
       const response = await instance({
         method: "POST",
-        url: header.url + "/register",
+        url: header.url + "/authentication/register",
         headers: {
           "Content-Type": "application/json",
         },
